@@ -1,4 +1,4 @@
-package cl.sanmarcos.citas.security;
+package cl.sanmarcos.atenciones.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;

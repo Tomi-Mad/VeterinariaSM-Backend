@@ -1,7 +1,7 @@
-package cl.sanmarcos.citas.config;
+package cl.sanmarcos.atenciones.config;
 
-import cl.sanmarcos.citas.dto.ErrorResponse;
-import cl.sanmarcos.citas.security.JwtAuthFilter;
+import cl.sanmarcos.atenciones.dto.ErrorResponse;
+import cl.sanmarcos.atenciones.security.JwtAuthFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +32,7 @@ public class SecurityConfig {
     private final String[] origenes;
 
     public SecurityConfig(JwtAuthFilter jwtAuthFilter, ObjectMapper objectMapper,
-                          @Value("${app.cors.allowed-origins}") String origenes) {
+                    @Value("${app.cors.allowed-origins}") String origenes) {
         this.jwtAuthFilter = jwtAuthFilter;
         this.objectMapper = objectMapper;
         this.origenes = origenes.split(",");
@@ -47,17 +47,19 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
-                // Reporte de citas: Administrador y Recepcionista
-                .requestMatchers(HttpMethod.GET, "/api/citas/reporte").hasAnyRole("ADMINISTRADOR", "RECEPCIONISTA")
-                // Gestionar solicitudes: confirmar, proponer horario, marcar inasistencia
-                .requestMatchers(HttpMethod.PATCH, "/api/citas/*/confirmar", "/api/citas/*/proponer-horario",
-                        "/api/citas/*/no-asistio").hasAnyRole("ADMINISTRADOR", "RECEPCIONISTA")
-                // Marcar como atendida: también el veterinario
-                .requestMatchers(HttpMethod.PATCH, "/api/citas/*/atender")
-                        .hasAnyRole("ADMINISTRADOR", "RECEPCIONISTA", "VETERINARIO")
-                // Solicitar, ver, aceptar horario y cancelar: cualquier usuario autenticado
-                // (el service verifica que el dueño solo toque sus propias citas)
-                .requestMatchers("/api/citas/**", "/api/citas").authenticated()
+                // Reporte general de atenciones: Administrador y Veterinario
+                .requestMatchers(HttpMethod.GET, "/api/atenciones/reporte")
+                        .hasAnyRole("ADMINISTRADOR", "VETERINARIO")
+                // Crear, editar o eliminar fichas clínicas, vacunas, exámenes, diagnósticos o recetas: solo Veterinario y Administrador
+                .requestMatchers(HttpMethod.POST, "/api/atenciones/**")
+                        .hasAnyRole("ADMINISTRADOR", "VETERINARIO")
+                .requestMatchers(HttpMethod.PUT, "/api/atenciones/**")
+                        .hasAnyRole("ADMINISTRADOR", "VETERINARIO")
+                .requestMatchers(HttpMethod.DELETE, "/api/atenciones/**")
+                        .hasAnyRole("ADMINISTRADOR", "VETERINARIO")
+                // Consultar historial de atenciones: cualquier usuario autenticado (el service valida dueño vs clínica)
+                .requestMatchers(HttpMethod.GET, "/api/atenciones/**", "/api/atenciones")
+                        .authenticated()
                 .anyRequest().denyAll())
             .exceptionHandling(e -> e
                 .authenticationEntryPoint((req, res, ex) -> escribir(res, 401, "Unauthorized",

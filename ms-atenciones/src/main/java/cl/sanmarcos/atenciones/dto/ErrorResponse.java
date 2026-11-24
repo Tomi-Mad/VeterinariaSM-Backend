@@ -1,4 +1,4 @@
-package cl.sanmarcos.citas.dto;
+package cl.sanmarcos.atenciones.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;

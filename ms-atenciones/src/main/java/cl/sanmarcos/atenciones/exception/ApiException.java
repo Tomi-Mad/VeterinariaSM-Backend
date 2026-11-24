@@ -1,4 +1,4 @@
-package cl.sanmarcos.citas.exception;
+package cl.sanmarcos.atenciones.exception;
 
 import org.springframework.http.HttpStatus;
 

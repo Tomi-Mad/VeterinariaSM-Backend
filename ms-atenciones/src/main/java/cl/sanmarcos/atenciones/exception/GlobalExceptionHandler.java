@@ -1,6 +1,6 @@
-package cl.sanmarcos.citas.exception;
+package cl.sanmarcos.atenciones.exception;
 
-import cl.sanmarcos.citas.dto.ErrorResponse;
+import cl.sanmarcos.atenciones.dto.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;

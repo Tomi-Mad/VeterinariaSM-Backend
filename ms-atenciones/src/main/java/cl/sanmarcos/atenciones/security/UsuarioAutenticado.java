@@ -1,4 +1,4 @@
-package cl.sanmarcos.citas.security;
+package cl.sanmarcos.atenciones.security;
 
 /** Datos del JWT. Se conserva el token para reenviarlo a ms-pacientes. */
 public record UsuarioAutenticado(Long id, String email, String rol, String token) {

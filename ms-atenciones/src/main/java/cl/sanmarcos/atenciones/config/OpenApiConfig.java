@@ -1,4 +1,4 @@
-package cl.sanmarcos.citas.config;
+package cl.sanmarcos.atenciones.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -11,14 +11,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenApiConfig {
 
-    @Bean
-    public OpenAPI openAPI() {
-        return new OpenAPI()
-                .info(new Info().title("ms-citas - Veterinaria San Marcos")
-                        .description("Solicitud, confirmación y reagendamiento de citas")
-                        .version("1.0.0"))
-                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
-                .components(new Components().addSecuritySchemes("bearerAuth",
-                        new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")));
-    }
+        @Bean
+        public OpenAPI openAPI() {
+                return new OpenAPI()
+                        .info(new Info().title("ms-atenciones - Veterinaria San Marcos")
+                                .description("Gestión de fichas clínicas, vacunas, exámenes, diagnósticos, recetas y reportes de atención")
+                                .version("1.0.0"))
+                        .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
+                        .components(new Components().addSecuritySchemes("bearerAuth",
+                                new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")));
+        }
 }
+

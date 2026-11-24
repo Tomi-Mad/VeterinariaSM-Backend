@@ -1,6 +1,6 @@
-package cl.sanmarcos.citas.client;
+package cl.sanmarcos.atenciones.client;
 
-import cl.sanmarcos.citas.exception.ApiException;
+import cl.sanmarcos.atenciones.exception.ApiException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
@@ -9,11 +9,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClient;
 
-/**
- * Comunicación entre microservicios: ms-citas le pregunta a ms-pacientes por la mascota,
- * reenviando el mismo JWT del usuario. Así ms-pacientes aplica su regla de privacidad
- * (un dueño solo puede ver mascotas propias) y ms-citas no necesita acceder a su base de datos.
- */
+
 @Component
 public class PacientesClient {
 
